@@ -1,0 +1,18 @@
+.text-center {
+  text-align: center;
+}
+
+.gray-bk {
+  background-color: lightgray;
+}
+
+.link {
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.link:hover {
+  text-decoration: underline;
+}

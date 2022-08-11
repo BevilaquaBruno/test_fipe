@@ -1,0 +1,81 @@
+<div>
+  <label for="brands">Marca:</label>
+  <select id="brands" onchange="getAllModels(this.value)">
+    <option value="0">Selecione...</option>
+  </select>
+  <label for="models">Modelo:</label>
+  <select id="models" onchange="getAllYears(document.getElementById('brands').value, this.value)">
+    <option value="0">Selecione...</option>
+  </select>
+  <label for="years">Ano:</label>
+  <select id="years" onchange="getPriceList(document.getElementById('brands').value, document.getElementById('models').value, this.value);">
+    <option value="0">Selecione...</option>
+  </select>
+
+  <pre id="car_info"></pre>
+</div>
+
+<script>
+  function getAllBrands(){
+    var brand_list = makeRequest("/motorcycles/brands", function(response){
+      if(response.status == 200){
+        let select = document.getElementById("brands");
+        response.data.forEach(function(brand){
+          var opt = document.createElement('option');
+          opt.value = brand.code;
+          opt.innerHTML = brand.name;
+          select.appendChild(opt);
+        });
+      }else{
+        alert('Erro ao consultar marcas');
+      }
+    });
+  }
+
+  function getAllModels(brand_code){
+    var brand_list = makeRequest("motorcycles/brands/"+brand_code+"/models", function(response){
+      if(response.status == 200){
+        let select = document.getElementById("models");
+        response.data.forEach(function(brand){
+          var opt = document.createElement('option');
+          opt.value = brand.code;
+          opt.innerHTML = brand.name;
+          select.appendChild(opt);
+        });
+      }else{
+        alert('Erro ao consultar marcas');
+      }
+    });
+  }
+
+  function getAllYears(brand_code, model_code){
+    var brand_list = makeRequest("motorcycles/brands/"+brand_code+"/models/"+model_code+"/years", function(response){
+      if(response.status == 200){
+        let select = document.getElementById("years");
+        response.data.forEach(function(brand){
+          var opt = document.createElement('option');
+          opt.value = brand.code;
+          opt.innerHTML = brand.name;
+          select.appendChild(opt);
+        });
+      }else{
+        alert('Erro ao consultar marcas');
+      }
+    });
+  }
+
+  function getPriceList(brand_code, model_code, year_code){
+    var brand_list = makeRequest("motorcycles/brands/"+brand_code+"/models/"+model_code+"/years/"+year_code, function(response){
+      if(response.status == 200){
+        let select = document.getElementById("years");
+        document.getElementById('car_info').innerHTML = JSON.stringify(response.data, undefined, 2);
+      }else{
+        alert('Erro ao consultar marcas');
+      }
+    });
+  }
+
+  window.onload = function(){
+    getAllBrands();
+  }
+</script>
