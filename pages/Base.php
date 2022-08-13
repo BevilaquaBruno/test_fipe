@@ -32,7 +32,11 @@
     </div>
   </div>
   <div class="container">
-    <?php require_once("./pages/". ucfirst($page) . ".html"); ?>
+    <?php if($page === ""){
+      require_once("./pages/". ucfirst($page) . ".html");
+    }else{
+      echo("Selecione uma opção acima.");
+    } ?>
   </div>
 </body>
 </html>
